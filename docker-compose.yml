@@ -4,7 +4,8 @@ services:
 
   sampleapp:
     tty: true
-    restart: unless-stopped
+      #currently paused for debugging purposes
+      #restart: unless-stopped
     image: sampleapp:latest
     env_file:
       - .env

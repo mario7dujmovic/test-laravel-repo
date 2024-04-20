@@ -1,3 +1,3 @@
 #!/bin/sh
 
-source /.env
+source /var/www/html/.env
