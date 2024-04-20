@@ -1,0 +1,14 @@
+# docker-compose.yml
+version: '2.3.3'
+services:
+
+  sampleapp:
+    tty: true
+    restart: unless-stopped
+    image: sampleapp:latest
+    env_file:
+      - .env
+    expose:
+      - 80
+    ports:
+      - 80:80
