@@ -1,15 +1,19 @@
-# docker-compose.yml
-version: '2.3.3'
+version: "3.7"
 services:
-
-  sampleapp:
-    tty: true
-      #currently paused for debugging purposes
-      #restart: unless-stopped
+  app:
+    build:
+      args:
+        user: mario
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
     image: sampleapp:latest
-    env_file:
-      - .env
-    expose:
-      - 80
+    container_name: the-ups-mon
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
     ports:
       - 80:80
+    expose:
+      - 80
