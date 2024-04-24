@@ -14,3 +14,37 @@ services:
       - 80:80
     expose:
       - 80
+    networks:
+      - local_network
+    depends_on:
+      - db
+
+  composer_installation:
+    container_name: composer_installation
+    image: composer
+    volumes:
+      - ./:/app
+    command: composer install --ignore-platform-reqs
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.3
+    container_name: umdb
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - local_network
+
+
+networks:
+  local_network:
+    driver: bridge
